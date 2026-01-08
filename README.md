@@ -18,7 +18,7 @@ Ansible
 
 
 
-[apt - Modul:](https://docs.ansible.com/projects/ansible/2.9/modules/apt_module.html#apt-module)
+[apt - Modul](https://docs.ansible.com/projects/ansible/2.9/modules/apt_module.html#apt-module)
 <pre><code>
 #apt get update:
 ansible all -m apt -a update_cache=true --become --ask-become-pass
@@ -34,7 +34,7 @@ ansible all -m apt -a "upgrade=dist" --become --ask-become-pass
 </code></pre>
 
 
-### Playbook:
+### My first Playbook:
 <pre><code>
 ansible-playbook --ask-become-pass install_apache.yml
 </code></pre>
