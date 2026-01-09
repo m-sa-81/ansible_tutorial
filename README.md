@@ -19,6 +19,9 @@ Ansible
 
 
 [apt - Modul](https://docs.ansible.com/projects/ansible/2.9/modules/apt_module.html#apt-module)
+[Package - Modul](https://docs.ansible.com/projects/ansible/2.9/modules/package_module.html#package-module)
+
+
 <pre><code>
 #apt get update:
 ansible all -m apt -a update_cache=true --become --ask-become-pass
@@ -38,3 +41,27 @@ ansible all -m apt -a "upgrade=dist" --become --ask-become-pass
 <pre><code>
 ansible-playbook --ask-become-pass install_apache.yml
 </code></pre>
+
+
+ansible <hostname> -m ansible.builtin.setup
+
+
+### Tags:
+
+Ansible reserves several tag names for special behavior: always, never, tagged, untagged and all. Both always and never are mostly for use in tagging the tasks themselves, the other three are used when selecting which tags to run or skip...
+
+<pre><code>
+#Tags im Playbook anzeigen:
+ansible-playbook --list-tags site.yml
+
+#Playbook mit Gags ausführen:
+ansible-playbook --tags samba --ask-become-pass site.yml
+ansible-playbook --tags "apache,db" --ask-become-pass site.yml
+
+
+</code></pre>
+
+
+
+
+
