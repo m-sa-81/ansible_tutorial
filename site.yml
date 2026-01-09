@@ -60,6 +60,31 @@
       group: root
       mode: 0644
 
+  - name: start apache2
+    tags: apache,apache2
+    service:
+      name: apache2
+      state: started  
+      enabled: yes   
+
+
+  - name: Dateiinhalt aendern
+    tags: apache,apache2
+    lineinfile:
+      path: /var/www/html/index.html
+      regexp: '^TEST'
+      line: ANSIBLE was here....
+    register: apacheconfig    #register state in variable
+       
+
+  - name: restart apache2    
+    tags: apache,apache2
+    service:
+      name: apache2
+      state: restarted  
+    when: apacheconfig.changed    
+
+
 
 - hosts: db_servers
   become: true
