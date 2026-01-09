@@ -1,8 +1,6 @@
 # Ansible
 Ansible 
 
-
-
 <pre><code>
   ansible all --list-hosts
 </code></pre>
@@ -18,7 +16,7 @@ Ansible
 
 
 
-[apt - Modul](https://docs.ansible.com/projects/ansible/2.9/modules/apt_module.html#apt-module)
+[apt - Modul](https://docs.ansible.com/projects/ansible/2.9/modules/apt_module.html#apt-module) \n
 [Package - Modul](https://docs.ansible.com/projects/ansible/2.9/modules/package_module.html#package-module)
 
 

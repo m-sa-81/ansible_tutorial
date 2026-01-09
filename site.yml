@@ -20,6 +20,23 @@
     when: ansible_distribution == "Ubuntu"    
 
 
+- hosts: workstations
+  become: true
+  tasks:
+
+  - name: install unzip
+    package:
+      name: unzip
+
+  - name: install terraform
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/1.14.3/terraform_1.14.3_linux_arm64.zip
+      dest: /usr/local/bin
+      remote_src: yes
+      mode:  0755
+      owner: root
+      group: root
+
 
 - hosts: web_servers
   become: true
@@ -34,6 +51,14 @@
       state: latest
       update_cache: yes
 
+  - name: copy default html files to server
+    tags: apache,apache2
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
 
 
 - hosts: db_servers
