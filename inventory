@@ -7,3 +7,5 @@
 
 [file_servers]
 #192.168.0.61 apache_package=httpd php_package=php
+#
+[workstations]

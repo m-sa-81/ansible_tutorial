@@ -8,8 +8,8 @@
   - name: Updates CentOS
     tags: always
     dnf:
-      update_only: yes
       update_cache: yes
+    changed_when: false    
     when: ansible_distribution == "CentOS"    
 
   - name: Updates Ubuntu
@@ -17,6 +17,7 @@
     apt:
       upgrade: dist
       update_cache: yes
+    changed_when: false    
     when: ansible_distribution == "Ubuntu"    
 
 
@@ -36,6 +37,16 @@
       mode:  0755
       owner: root
       group: root
+
+#- hosts: all
+#  become: true
+#  tasks:
+#
+#  - name: Add key to user...
+#    tags: always
+#    authorized_key:
+#      user: martin2  
+#      key: "ssh-ed25519 KEY For Ansible"
 
 
 - hosts: web_servers
