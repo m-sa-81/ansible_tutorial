@@ -1,0 +1,137 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+
+  - name: Updates CentOS
+    tags: always
+    dnf:
+      update_cache: yes
+    changed_when: false    
+    when: ansible_distribution == "CentOS"    
+
+  - name: Updates Ubuntu
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+    changed_when: false    
+    when: ansible_distribution == "Ubuntu"    
+
+
+- hosts: workstations
+  become: true
+  tasks:
+
+  - name: install unzip
+    package:
+      name: unzip
+
+  - name: install terraform
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/1.14.3/terraform_1.14.3_linux_arm64.zip
+      dest: /usr/local/bin
+      remote_src: yes
+      mode:  0755
+      owner: root
+      group: root
+
+#- hosts: all
+#  become: true
+#  tasks:
+#
+#  - name: Add key to user...
+#    tags: always
+#    authorized_key:
+#      user: martin2  
+#      key: "ssh-ed25519 KEY For Ansible"
+
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: install apache and php package
+    tags: apache,apache2,ubuntu
+    package:
+      name: 
+        - "{{ apache_package }}"
+        - "{{ php_package }}" 
+      state: latest
+      update_cache: yes
+
+  - name: copy default html files to server
+    tags: apache,apache2
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: start apache2
+    tags: apache,apache2
+    service:
+      name: apache2
+      state: started  
+      enabled: yes   
+
+
+  - name: Dateiinhalt aendern
+    tags: apache,apache2
+    lineinfile:
+      path: /var/www/html/index.html
+      regexp: '^TEST'
+      line: ANSIBLE was here....
+    register: apacheconfig    #register state in variable
+       
+
+  - name: restart apache2    
+    tags: apache,apache2
+    service:
+      name: apache2
+      state: restarted  
+    when: apacheconfig.changed    
+
+
+
+- hosts: db_servers
+  become: true
+  tasks:
+
+  - name: install mariadb
+    tags: db,mariadb
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "Ubuntu"    
+
+
+
+
+- hosts: file_servers
+  become: true
+  tasks:
+
+  - name: install sambab
+    tags: samba
+    apt:
+      name: samba
+      state: latest
+    when: ansible_distribution == "Ubuntu"    
+
+
+
+
+#  - name: install apache2 and php package
+#    apt:
+#      name: 
+#        - apache2
+#        - libapache2-mod-php  
+#      state: latest
+#      update_cache: yes
+#
+#    when: ansible_distribution == "Ubuntu"    
+

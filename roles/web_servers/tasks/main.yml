@@ -1,0 +1,41 @@
+- name: install apache and php package
+  tags: apache,apache2,ubuntu
+  package:
+    name: 
+      - "{{ apache_package }}"
+      - "{{ php_package }}" 
+    state: latest
+    update_cache: yes
+
+- name: copy default html files to server
+  tags: apache,apache2
+  copy:
+    src: default_site.html
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: 0644
+
+- name: start apache2
+  tags: apache,apache2
+  service:
+    name: apache2
+    state: started  
+    enabled: yes   
+
+
+- name: Dateiinhalt aendern
+  tags: apache,apache2
+  lineinfile:
+    path: /var/www/html/index.html
+    regexp: '^TEST'
+    line: ANSIBLE was here....
+  register: apacheconfig    #register state in variable
+       
+
+- name: restart apache2    
+  tags: apache,apache2
+  service:
+    name: apache2
+    state: restarted  
+  when: apacheconfig.changed    
