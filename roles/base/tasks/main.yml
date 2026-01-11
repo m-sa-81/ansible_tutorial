@@ -1,0 +1,9 @@
+- name: genretae sshd_config_file from tempalte
+  tags: ssh
+  template:
+    src: "{{sshd_template_file }}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_sshd    

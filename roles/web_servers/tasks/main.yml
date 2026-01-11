@@ -30,12 +30,13 @@
     path: /var/www/html/index.html
     regexp: '^TEST'
     line: ANSIBLE was here....
-  register: apacheconfig    #register state in variable
+#  register: apacheconfig    #register state in variable
+  notify: restart_apache
        
 
-- name: restart apache2    
-  tags: apache,apache2
-  service:
-    name: apache2
-    state: restarted  
-  when: apacheconfig.changed    
+#- name: restart apache2    
+#  tags: apache,apache2
+#  service:
+#    name: apache2
+#    state: restarted  
+#  when: apacheconfig.changed    
