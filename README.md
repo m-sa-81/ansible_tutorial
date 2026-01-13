@@ -55,9 +55,26 @@ ansible-playbook --list-tags site.yml
 #Playbook mit Gags ausführen:
 ansible-playbook --tags samba --ask-become-pass site.yml
 ansible-playbook --tags "apache,db" --ask-become-pass site.yml
-
-
 </code></pre>
+
+
+###playbook:
+
+handlers:
+  - import_tasks
+
+task:
+  - name:
+  ...
+    register: echo_results
+
+  - name: Show result
+    debug: var=echo_result.stdout
+
+  - name: check value of return code
+    ansible.builtin.debug:
+      var: bar_status.rc    
+    
 
 
 
