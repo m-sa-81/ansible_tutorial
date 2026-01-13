@@ -58,7 +58,7 @@ ansible-playbook --tags "apache,db" --ask-become-pass site.yml
 </code></pre>
 
 
-###playbook:
+### Playbook: Biespiele für Variablen (register)
 
 <pre><code>
 handlers:
