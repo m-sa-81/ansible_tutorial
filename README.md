@@ -60,6 +60,7 @@ ansible-playbook --tags "apache,db" --ask-become-pass site.yml
 
 ###playbook:
 
+<pre><code>
 handlers:
   - import_tasks
 
@@ -75,7 +76,7 @@ task:
     ansible.builtin.debug:
       var: bar_status.rc    
     
-
+</code></pre>
 
 
 
